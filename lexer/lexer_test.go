@@ -7,19 +7,53 @@ import (
 )
 
 func TestNewToken(t *testing.T) {
-	input := `=+(){},;`
+	input := `let five = 5;
+		let ten = 10;
+		let add = fn(x, y) {
+			x + y;
+		};
+		let result = add(five, ten); 
+		`
 
 	tests := []struct {
 		expectedType    token.Type
 		expectedLiteral string
 	}{
+		{token.LET, "let"},
+		{token.IDEN, "five"},
 		{token.ASSIGN, "="},
-		{token.PLUS, "+"},
+		{token.INT, "5"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDEN, "ten"},
+		{token.ASSIGN, "="},
+		{token.INT, "10"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDEN, "add"},
+		{token.ASSIGN, "="},
+		{token.FUNCTION, "fn"},
 		{token.LPAREN, "("},
+		{token.IDEN, "x"},
+		{token.COMMA, ","},
+		{token.IDEN, "y"},
 		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
+		{token.IDEN, "x"},
+		{token.PLUS, "+"},
+		{token.IDEN, "y"},
+		{token.SEMICOLON, ";"},
 		{token.RBRACE, "}"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDEN, "result"},
+		{token.ASSIGN, "="},
+		{token.IDEN, "add"},
+		{token.LPAREN, "("},
+		{token.IDEN, "five"},
 		{token.COMMA, ","},
+		{token.IDEN, "ten"},
+		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
